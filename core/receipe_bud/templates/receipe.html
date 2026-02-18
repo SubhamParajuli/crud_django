@@ -7,6 +7,15 @@
     <title>Receipe CRUD</title>
 </head>
 <body>
+
+
+<div class="container mt-5">
+  <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="display: flex; justify-content: space-between;">
+    <h2>Add Receipe</h2>
+    </div>
+    <hr />
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
       <input
@@ -46,5 +55,39 @@
       </form>
     </div>
   </div>
+
+  <table class="table mt-5">
+  <thead>
+    <tr >
+      <th scope="col">SNo.</th>
+      <th scope="col">Receipe Name</th>
+      <th scope="col">Receipe Discription</th>
+      <th scope="col">Image</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for receipe in receipes %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{receipe.receipe_name}}</td>
+      <td>{{receipe.receipe_description}}</td>
+      <td>
+        <img class="rounded mx-auto d-block h-100px w-200px" style="width: 200px; height: 150px;" src="/media/{{receipe.receipe_image}}" alt="{{receipe.receipe_name}}">
+        
+      </td>
+      <td>
+          <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+          <a href="/delete_receipe/{{receipe.id}}/" class="btn btn-danger">Delete</a>
+          <a href="/update_receipe/{{receipe.id}}/" class="mt-2 btn btn-success">Update</a>
+          </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
 </body>
 </html>

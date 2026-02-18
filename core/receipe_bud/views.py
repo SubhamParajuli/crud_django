@@ -21,3 +21,5 @@ def receipe_page(request):
     }   
 
     return render(request,'receipe.html',context)
+
+
