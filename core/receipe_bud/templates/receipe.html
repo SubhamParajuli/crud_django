@@ -11,45 +11,50 @@
 
 
 <div class="container mt-5">
-  <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+  <form class="col-6 mx-auto card p-3 shadow-lg" method="post">
     {% csrf_token %}
-    <div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
     <h2 style="text-align: center;">Receipe CRUD</h2>
+    <p class="">Subham Parajuli</p>
     </div>
     <hr />
+    {% if errors %}
+    <div class="alert alert-danger" role="alert">
+      Please fix the form errors.
+    </div>
+    {% endif %}
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control {% if errors.receipe_name %}is-invalid{% endif %}"
         name="receipe_name"
+        value="{{ form_data.receipe_name|default:'' }}"
       />
+      {% if errors.receipe_name %}
+      <div class="invalid-feedback">{{ errors.receipe_name }}</div>
+      {% endif %}
     </div>
     <div class="mb-3">
       <label for="receipe_description" class="form-label"
         >Receipe Description</label
       >
-      <textarea  name="receipe_description" class="form-control"></textarea>
-    </div>
-
-    <div class="mb-3">
-      <label  class="form-label"
-        >Receipe Description</label
-      >
-      <input type="file"  name="receipe_image" class="form-control" />
+      <textarea  name="receipe_description" class="form-control {% if errors.receipe_description %}is-invalid{% endif %}">{{ form_data.receipe_description|default:'' }}</textarea>
+      {% if errors.receipe_description %}
+      <div class="invalid-feedback">{{ errors.receipe_description }}</div>
+      {% endif %}
     </div>
 
     <button type="submit" class="btn btn-success">Add Receipe</button>
   </form>
 
 
-  <table class="table mt-5">
+  <table class="table table-striped table-bordered mt-5">
   <thead>
     <tr >
       <th scope="col">SNo.</th>
       <th scope="col">Receipe Name</th>
       <th scope="col">Receipe Discription</th>
-      <th scope="col">Image</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -59,12 +64,6 @@
       <th scope="row">{{forloop.counter}}</th>
       <td>{{receipe.receipe_name}}</td>
       <td>{{receipe.receipe_description}}</td>
-      <td>
-        {% if receipe.receipe_image %}
-        <img class="rounded mx-auto d-block h-100px w-200px" style="width: 200px; height: 150px;" src="{{ receipe.receipe_image.url }}" alt="{{receipe.receipe_name}}">
-        {% endif %}
-        
-      </td>
       <td>
           <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
           <a href="/delete_receipe/{{receipe.id}}/" class="btn btn-danger">Delete</a>

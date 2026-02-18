@@ -3,19 +3,35 @@ from .models import *
 # Create your views here.
 
 def receipe_page(request):
+    queryset=Receipe.objects.all()
+
     if request.method=="POST":
         data=request.POST
-        receipe_image=request.FILES.get('receipe_image')
-        receipe_name=data.get('receipe_name')
-        receipe_description=data.get('receipe_description')
+        receipe_name=(data.get('receipe_name') or '').strip()
+        receipe_description=(data.get('receipe_description') or '').strip()
+        errors={}
+
+        if len(receipe_name)==0:
+            errors['receipe_name']='Receipe name cannot be empty.'
+        if len(receipe_description)==0:
+            errors['receipe_description']='Receipe description cannot be empty.'
+
+        if errors:
+            context={
+                'receipes':queryset,
+                'errors':errors,
+                'form_data':{
+                    'receipe_name':receipe_name,
+                    'receipe_description':receipe_description,
+                }
+            }
+            return render(request,'receipe.html',context)
 
         Receipe.objects.create(
-            receipe_image=receipe_image,
             receipe_name=receipe_name,
             receipe_description=receipe_description)
         return redirect('/')
-    
-    queryset=Receipe.objects.all()
+
     context={
         'receipes':queryset
     }   
@@ -37,15 +53,25 @@ def update_receipe(request,id):
     
     if request.method=="POST":
         data=request.POST
-        receipe_image=request.FILES.get('receipe_image')
-        receipe_name=data.get('receipe_name')
-        receipe_description=data.get('receipe_description')
+        receipe_name=(data.get('receipe_name') or '').strip()
+        receipe_description=(data.get('receipe_description') or '').strip()
+        errors={}
+
+        if len(receipe_name)==0:
+            errors['receipe_name']='Receipe name cannot be empty.'
+        if len(receipe_description)==0:
+            errors['receipe_description']='Receipe description cannot be empty.'
+
+        if errors:
+            context['errors']=errors
+            context['form_data']={
+                'receipe_name':receipe_name,
+                'receipe_description':receipe_description,
+            }
+            return render(request,'update_receipe.html',context)
 
         queryset.receipe_name=receipe_name
         queryset.receipe_description=receipe_description
-
-        if receipe_image:
-            queryset.receipe_image=receipe_image
         
         queryset.save()
         return redirect('/')
