@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 # Create your views here.
 
-def receipe_page(request):
+def receipe_page(request,id):
     if request.method=="POST":
         data=request.POST
         receipe_image=request.FILES.get('receipe_image')
@@ -23,8 +23,9 @@ def receipe_page(request):
     return render(request,'receipe.html',context)
 
 
-def delete_receipe(request):
-
+def delete_receipe(request,id):
+    receipe=Receipe.objects.get(id=id)
+    receipe.delete()
     return redirect('/')
 
 
