@@ -20,5 +20,8 @@ from receipe_bud.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',receipe_page,name="receipe_page")
+    path('update_receipe/<int:id>/',update_receipe,name="update_receipe"),
+    path('delete_receipe/<int:id>/',delete_receipe,name="delete_receipe"),
+    path('',receipe_page,name="receipe_page"),
+
 ]

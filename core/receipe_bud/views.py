@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 # Create your views here.
 
-def receipe_page(request,id):
+def receipe_page(request):
     if request.method=="POST":
         data=request.POST
         receipe_image=request.FILES.get('receipe_image')
