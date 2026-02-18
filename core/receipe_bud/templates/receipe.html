@@ -14,7 +14,7 @@
   <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div style="display: flex; justify-content: space-between;">
-    <h2>Add Receipe</h2>
+    <h2 style="text-align: center;">Receipe CRUD</h2>
     </div>
     <hr />
     <div class="mb-3">
@@ -60,7 +60,9 @@
       <td>{{receipe.receipe_name}}</td>
       <td>{{receipe.receipe_description}}</td>
       <td>
-        <img class="rounded mx-auto d-block h-100px w-200px" style="width: 200px; height: 150px;" src="/media/{{receipe.receipe_image}}" alt="{{receipe.receipe_name}}">
+        {% if receipe.receipe_image %}
+        <img class="rounded mx-auto d-block h-100px w-200px" style="width: 200px; height: 150px;" src="{{ receipe.receipe_image.url }}" alt="{{receipe.receipe_name}}">
+        {% endif %}
         
       </td>
       <td>

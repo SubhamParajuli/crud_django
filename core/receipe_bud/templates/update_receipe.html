@@ -28,7 +28,7 @@
       <input type="file" name="receipe_image" class="form-control" />
       {% if receipe.receipe_image %}
       <small class="form-text text-muted">Current image:</small>
-      <img class="rounded mt-2 ml-2" style="width: 200px; height: 150px; " src="/media/{{receipe.receipe_image}}" alt="{{receipe.receipe_name}}">
+      <img class="rounded mt-2 ml-2" style="width: 200px; height: 150px; " src="{{ receipe.receipe_image.url }}" alt="{{receipe.receipe_name}}">
       {% endif %}
     </div>
 
