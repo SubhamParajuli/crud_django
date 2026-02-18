@@ -1,0 +1,40 @@
+{%extends "receipe.html" %} {%block start%}
+
+<div class="container mt-5">
+  <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Update Receipe</h2>
+    <hr />
+    <div class="mb-3">
+      <label for="receipe_name" class="form-label">Receipe Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="receipe_name"
+        value="{{receipe.receipe_name}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="receipe_description" class="form-label"
+        >Receipe Description</label
+      >
+      <textarea name="receipe_description" class="form-control">{{receipe.receipe_description}}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"
+        >Receipe Image</label
+      >
+      <input type="file" name="receipe_image" class="form-control" />
+      {% if receipe.receipe_image %}
+      <small class="form-text text-muted">Current image:</small>
+      <img class="rounded mt-2 ml-2" style="width: 200px; height: 150px; " src="/media/{{receipe.receipe_image}}" alt="{{receipe.receipe_name}}">
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-success mb-3">Update Receipe</button>
+    <a href="/receipes/" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

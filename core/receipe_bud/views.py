@@ -23,3 +23,32 @@ def receipe_page(request):
     return render(request,'receipe.html',context)
 
 
+def delete_receipe(request):
+
+    return redirect('/')
+
+
+def update_receipe(request,id):
+    queryset=Receipe.objects.get(id=id)
+    context={
+        'receipe':queryset
+        }
+    
+    if request.method=="POST":
+        data=request.POST
+        receipe_image=request.FILES.get('receipe_image')
+        receipe_name=data.get('receipe_name')
+        receipe_description=data.get('receipe_description')
+
+        queryset.receipe_name=receipe_name
+        queryset.receipe_description=receipe_description
+
+        if receipe_image:
+            queryset.receipe_image=receipe_image
+        
+        queryset.save()
+        return redirect('/')
+    return render(request,'update_receipe.html',context)
+
+
+

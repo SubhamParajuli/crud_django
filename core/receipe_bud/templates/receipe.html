@@ -7,6 +7,7 @@
     <title>Receipe CRUD</title>
 </head>
 <body>
+    {% block start %}
 
 
 <div class="container mt-5">
@@ -41,20 +42,6 @@
     <button type="submit" class="btn btn-success">Add Receipe</button>
   </form>
 
-  <div class="mt-5">
-      <div class="mb-1">
-      <form action="">
-      <label for="exampleInputEmail1" class="form-label">Search :</label>
-      <input
-        type="text"
-        class="form-control mb-1"
-        name="search"
-        
-      />
-      <button type="submit" class="btn btn-primary">Seach</button>
-      </form>
-    </div>
-  </div>
 
   <table class="table mt-5">
   <thead>
@@ -88,6 +75,7 @@
 </table>
 </div>
 
+{% endblock %}
 
 </body>
 </html>
