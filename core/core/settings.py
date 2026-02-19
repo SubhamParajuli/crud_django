@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "crud-django-c606.onrender.com",
+    "*"
 ]
 
 
