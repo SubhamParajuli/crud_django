@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Receipe CRUD</title>
+    <style>
+      .completed-row {
+        text-decoration: line-through;
+        opacity: 0.5;
+      }
+    </style>
 </head>
 <body>
     {% block start %}
@@ -60,8 +66,13 @@
   </thead>
   <tbody>
     {% for receipe in receipes %}
-    <tr>
-      <th scope="row">{{forloop.counter}}</th>
+    <tr class="receipe-row">
+      <th scope="row">
+        <div class="d-flex align-items-center gap-2">
+          <input type="checkbox" class="form-check-input row-complete-checkbox" />
+          <span>{{forloop.counter}}</span>
+        </div>
+      </th>
       <td>{{receipe.receipe_name}}</td>
       <td>{{receipe.receipe_description}}</td>
       <td>
@@ -77,6 +88,19 @@
 </div>
 
 {% endblock %}
+
+<script>
+  document.querySelectorAll('.row-complete-checkbox').forEach((checkbox) => {
+    checkbox.addEventListener('change', function () {
+      const row = this.closest('.receipe-row');
+      if (!row) {
+        return;
+      }
+
+      row.classList.toggle('completed-row', this.checked);
+    });
+  });
+</script>
 
 </body>
 </html>
